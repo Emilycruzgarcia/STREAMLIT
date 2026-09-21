@@ -29,7 +29,7 @@ df["Order_Date"] = pd.to_datetime(df["Order_Date"])
 # We create a working copy/view for time aggregation so main df keeps Order_Date column for filtering later
 df_time = df.set_index("Order_Date")
 sales_by_month = (
-    df_time.filter(items=["Sales"]).groupby(pd.Grouper(freq="M")).sum()
+    df_time.filter(items=["Sales"]).groupby(pd.Grouper(freq="ME")).sum()
 )
 
 st.dataframe(sales_by_month)
@@ -74,11 +74,9 @@ st.write(
 )
 if not filtered_df.empty:
   filtered_time_df = filtered_df.set_index("Order_Date")
-  filtered_sales_by_month = (
-      filtered_time_df.filter(items=["Sales"])
-      .groupby(pd.Grouper(freq="M"))
-      .sum()
-  )
+    filtered_sales_by_month = (
+    filtered_time_df.filter(items=["Sales"]).groupby(pd.Grouper(freq="ME")).sum()
+    )
   st.line_chart(filtered_sales_by_month, y="Sales")
 else:
   st.warning("Please select at least one Sub-Category.")
