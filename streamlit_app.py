@@ -74,9 +74,11 @@ st.write(
 )
 if not filtered_df.empty:
   filtered_time_df = filtered_df.set_index("Order_Date")
-    filtered_sales_by_month = (
-    filtered_time_df.filter(items=["Sales"]).groupby(pd.Grouper(freq="ME")).sum()
-    )
+  filtered_sales_by_month = (
+      filtered_time_df.filter(items=["Sales"])
+      .groupby(pd.Grouper(freq="ME"))
+      .sum()
+  )
   st.line_chart(filtered_sales_by_month, y="Sales")
 else:
   st.warning("Please select at least one Sub-Category.")
